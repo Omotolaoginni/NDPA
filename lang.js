@@ -42,7 +42,7 @@ const LANG = {
 
     // ── Business Data Volume ──
     size: {
-      heading: "How many customers does your business handle?",
+      heading: "How many customer information does your business handle?",
       subtext: "Select the option that best describes your business.",
       option_lt200: "Less than 200 people",
       option_lt200_hint: "You handle personal information for fewer than 200 people in 6 months.",
@@ -246,16 +246,16 @@ const LANG = {
     },
 
     size: {
-      heading: "How many customers your business dey handle?",
+      heading: "How many customer information your business they handle?",
       subtext: "Choose the option wey best fit your business.",
       option_lt200: "Less than 200 people",
-      option_lt200_hint: "You dey handle personal information for less than 200 people for 6 months.",
+      option_lt200_hint: "You dey handle personal information for people wey no reach 200 during the last six months.",
       option_200to1000: "200–1,000 people",
-      option_200to1000_hint: "You dey handle personal information for 200 to 1,000 people for 6 months.",
+      option_200to1000_hint: "You dey handle personal information for people wey reach 200 to 1,000 during the last six months.",
       option_gt1000: "More than 1,000 people",
-      option_gt1000_hint: "You dey handle personal information for more than 1,000 people for 6 months.",
+      option_gt1000_hint: "You dey handle personal information for people wey pass 1,000 during the last six months.",
       option_notSure: "I no sure",
-      option_notSure_hint: "I no sure how many people information my business dey handle.",
+      option_notSure_hint: "I no sure how many people personal information your business dey handle during the last six months.",
       cta: "Start assessment",
     },
 
