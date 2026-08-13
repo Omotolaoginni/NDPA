@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Responsive iframe container — minimum width 320px (see PRD §38) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+  <title>NDPA Compliance Self-Check | Know Your Business Data Protection Status</title>
+  <meta name="description" content="A free, private, self-assessment tool for Nigerian MSMEs. Answer 28 questions and get your NDPA compliance score in under 10 minutes. No account required." />
+  <!-- Content Security Policy (PRD §34) -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; frame-ancestors *;" />
+  <!-- Performance: no third-party scripts, no tracking (PRD §34, §35) -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     APP SHELL
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div class="app-shell" role="application" aria-label="NDPA Compliance Self-Check">
+
+  <!-- Offline banner (inline — shows without leaving the current screen) -->
+  <div id="offline-banner" role="alert" aria-live="assertive"
+       style="display:none; background:#fff3d6; color:#8a5a00; padding:8px 16px; text-align:center; font-size:0.875rem; border-bottom:1px solid #f0c040;">
+  </div>
+
+  <!-- ── Persistent Header ─────────────────────────────────────────────── -->
+  <header class="app-header app-header--hidden" role="banner">
+    <button class="app-header__logo" id="header-logo" type="button"
+            aria-label="NDPA Self-Check, go back to home">NDPA Self-Check</button>
+    <!-- Language toggle (visible in header after landing) -->
+    <div class="lang-toggle" role="group" aria-label="Language selector">
+      <button class="lang-toggle__btn is-active" data-lang="en" aria-pressed="true" id="header-lang-en">English</button>
+      <button class="lang-toggle__btn" data-lang="pidgin" aria-pressed="false" id="header-lang-pidgin">Pidgin</button>
+    </div>
+  </header>
+
+  <!-- ── Main Screens ───────────────────────────────────────────────────── -->
+  <main class="app-main" id="main-content" role="main" tabindex="-1">
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 01 — LANDING
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-landing" class="screen" aria-label="Landing" tabindex="-1">
+      <div class="landing">
+
+        <!-- Language selector — top of page -->
+        <div class="landing__lang">
+          <div class="lang-toggle" role="group" aria-label="Language selector">
+            <button class="lang-toggle__btn is-active" data-lang="en" id="landing-lang-en" aria-pressed="true">English</button>
+            <button class="lang-toggle__btn" data-lang="pidgin" id="landing-lang-pidgin" aria-pressed="false">Pidgin</button>
+          </div>
+        </div>
+
+        <!-- Product label (eyebrow) -->
+        <p class="landing__eyebrow" data-i18n="landing.eyebrow">NDPA Compliance Self-Check</p>
+
+        <!-- Main headline -->
+        <h1 class="landing__headline" data-i18n="landing.headline">
+          How well does your business protect customer information?
+        </h1>
+
+        <!-- Supporting copy -->
+        <p class="landing__subtext" data-i18n="landing.subtext">
+          Answer a few simple questions to see what your business is doing well and what you should improve.
+        </p>
+
+        <!-- Visual / illustration placeholder (wireframe only) -->
+        <div class="landing__visual" role="img"
+             aria-label="Illustration placeholder showing a small business protecting customer data">
+          [ ILLUSTRATION / VISUAL PLACEHOLDER ]
+        </div>
+
+        <!-- Benefit / trust indicators -->
+        <ul class="landing__benefits" aria-label="Why use this tool">
+          <li class="landing__benefit">
+            <span class="landing__benefit-icon" aria-hidden="true">
+              <svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path d="M360-840v-80h240v80H360Zm80 440h80v-240h-80v240Zm-99.5 291.5Q275-137 226-186t-77.5-114.5Q120-366 120-440t28.5-139.5Q177-645 226-694t114.5-77.5Q406-800 480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80q-74 0-139.5-28.5ZM678-242q82-82 82-198t-82-198q-82-82-198-82t-198 82q-82 82-82 198t82 198q82 82 198 82t198-82ZM480-440Z"/></svg>
+            </span>
+            <span data-i18n="landing.trust1">Takes less than 10 minutes</span>
+          </li>
+          <li class="landing__benefit">
+            <span class="landing__benefit-icon" aria-hidden="true">
+              <svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path d="M791-55 686-160H160v-112q0-34 17.5-62.5T224-378q45-23 91.5-37t94.5-21L55-791l57-57 736 736-57 57ZM240-240h366L486-360h-6q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm496-138q29 14 46 42.5t18 61.5L666-408q18 7 35.5 14t34.5 16ZM568-506l-59-59q23-9 37-29.5t14-45.5q0-33-23.5-56.5T480-720q-25 0-45.5 14T405-669l-59-59q23-34 58-53t76-19q66 0 113 47t47 113q0 41-19 76t-53 58Zm38 266H240h366ZM457-617Z"/></svg>
+            </span>
+            <span data-i18n="landing.trust2">No account required</span>
+          </li>
+          <li class="landing__benefit">
+            <span class="landing__benefit-icon" aria-hidden="true">
+              <svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path d="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-84q97-30 162-118.5T718-480H480v-315l-240 90v207q0 7 2 18h238v316Z"/></svg>
+            </span>
+            <span data-i18n="landing.trust3">Your answers stay on your device</span>
+          </li>
+        </ul>
+
+        <!-- Primary CTA -->
+        <button class="btn btn-primary landing__cta" id="landing-cta" aria-describedby="landing-trust-desc">
+          <span data-i18n="landing.cta">Check my business</span>
+        </button>
+
+        <p id="landing-trust-desc" class="visually-hidden">No registration required. All answers stay private on your device.</p>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 03 — SECTOR SELECTION
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-sector" class="screen" aria-label="Sector selection" tabindex="-1">
+      <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;"
+          id="sector-heading">What type of business do you run?</h1>
+      <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-bottom: 1rem;"
+         data-i18n="sector.subtext">
+        This helps us make your results more relevant.
+      </p>
+
+      <div class="selection-group" id="sector-options" role="radiogroup" aria-labelledby="sector-heading">
+        <!-- Populated by renderSector() -->
+      </div>
+
+      <button class="btn btn-primary" id="sector-continue" disabled aria-disabled="true">Continue</button>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 04 — BUSINESS SIZE
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-size" class="screen" aria-label="Business size selection" tabindex="-1">
+      <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;"
+          id="size-heading">How much customer information does your business handle?</h1>
+      <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-bottom: 1rem;"
+         data-i18n="size.subtext">
+        Select the option that best describes your business.
+      </p>
+
+      <div class="selection-group" id="size-options" role="radiogroup" aria-labelledby="size-heading">
+        <!-- Populated by renderSize() -->
+      </div>
+
+      <button class="btn btn-primary" id="size-continue" disabled aria-disabled="true">Start assessment</button>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 05 / 06 — ASSESSMENT (Default + Selected state)
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-assessment" class="screen" aria-label="Assessment question" tabindex="-1">
+
+      <!-- Progress -->
+      <div class="progress-container" aria-live="polite" aria-atomic="true">
+        <div class="progress-meta">
+          <span id="q-counter" aria-label="Question progress">Question 1 of 28</span>
+          <span id="q-progress-label" aria-hidden="true">0% complete</span>
+        </div>
+        <div class="progress-bar" role="progressbar"
+             aria-valuemin="0" aria-valuemax="100"
+             id="q-progress-bar" aria-label="Assessment progress">
+          <div class="progress-bar__fill" id="q-progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- Category label -->
+      <span class="category-label" id="q-category" aria-label="Current category">Applicability &amp; Awareness</span>
+
+      <!-- Question text -->
+      <h1 style="font-size: 1.125rem; font-weight: 600; line-height: 1.5; margin: 1rem 0 0.5rem;"
+          id="q-text">[Question text will appear here]</h1>
+
+      <!-- Answer options -->
+      <div class="answer-group" id="q-answers" role="radiogroup" aria-labelledby="q-text">
+        <!-- Populated by renderQuestion() -->
+      </div>
+
+      <!-- Navigation -->
+      <div class="assessment-nav">
+        <button class="assessment-nav__prev" id="q-prev"
+                disabled aria-disabled="true" hidden
+                aria-label="Go to previous question">← Previous question</button>
+        <button class="btn btn-primary assessment-nav__next" id="q-next" disabled aria-disabled="true">Next →</button>
+      </div>
+      <button class="btn btn-tertiary assessment-restart" id="q-restart"
+              aria-label="Restart assessment from the beginning">Restart assessment</button>
+
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 07 — CATEGORY TRANSITION
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-transition" class="screen" aria-label="Category transition" tabindex="-1">
+      <div class="transition">
+
+        <h1 class="transition__heading" id="trans-heading">Good progress!</h1>
+
+        <!-- Completed categories -->
+        <div class="transition__section">
+          <p class="transition__label" id="trans-completed-label">Completed</p>
+          <ul class="transition__list" id="trans-completed-list" aria-label="Completed categories">
+            <!-- Populated by renderTransition() -->
+          </ul>
+        </div>
+
+        <!-- Up next (clickable — proceeds to the next applicable section) -->
+        <div class="transition__section">
+          <p class="transition__label" id="trans-up-next">Up next</p>
+          <button type="button" class="card transition__card" id="trans-next-card"
+                  aria-label="Continue to next section">
+            <span class="transition__card-info">
+              <span class="transition__card-name" id="trans-next-cat-name">Next category</span>
+              <span class="transition__card-count" id="trans-next-cat-count"></span>
+            </span>
+            <span class="transition__card-arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <button class="btn btn-primary transition__cta" id="trans-continue">Continue</button>
+
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 09 — PROCESSING
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-processing" class="screen text-center" aria-label="Processing results" tabindex="-1"
+             aria-live="polite">
+      <div style="margin-top: 4rem;">
+        <div class="spinner" role="status" aria-label="Loading your results"></div>
+        <h1 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;"
+            id="processing-heading">Checking your results…</h1>
+        <p style="font-size: 0.875rem; color: var(--color-text-secondary); max-width: 280px; margin: 0 auto;"
+           id="processing-subtext">
+          We're looking at your answers to identify your strengths and the areas that need attention.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 10 / 11 / 12 / 13 — RESULTS
+         (Green / Amber / Red / Category Expanded — single screen, dynamic)
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-results" class="screen" aria-label="Your results" tabindex="-1">
+      <div class="results">
+
+        <h1 class="results__heading" data-i18n="results.heading">Your results</h1>
+
+        <!-- Risk Tier Badge -->
+        <div class="results__badge">
+          <span id="results-tier-badge" class="risk-badge risk-badge--amber" role="status" aria-live="polite">
+            <span class="risk-badge__icon" aria-hidden="true"></span>
+            <span class="risk-badge__label" id="results-tier-text">Action Needed</span>
+          </span>
+        </div>
+
+        <!-- Score -->
+        <div class="score-display">
+          <div class="score-display__number" id="results-score-number" aria-label="Your score">–%</div>
+          <div class="score-display__label" id="results-score-label">Self-check score</div>
+        </div>
+
+        <!-- Interpretation -->
+        <p class="results__interpretation" id="results-interpretation"></p>
+
+        <!-- Strengths -->
+        <div class="results__section" id="results-strengths">
+          <p class="section-heading" id="results-strengths-heading">What you're doing well</p>
+          <div class="card results__strengths-card">
+            <span class="results__strengths-icon" aria-hidden="true">
+              <svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path d="M424-296l282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+            </span>
+            <p class="results__strengths-text" id="results-strengths-text"></p>
+          </div>
+        </div>
+
+        <!-- Category Breakdown (collapsible on mobile) -->
+        <div class="results__section collapsible" id="breakdown-collapsible">
+          <p class="section-heading" id="results-breakdown-heading">Category breakdown</p>
+          <button class="collapsible__trigger"
+                  id="breakdown-toggle"
+                  aria-expanded="false"
+                  aria-controls="cat-breakdown-wrap">
+            Show details
+            <span class="collapsible__icon" aria-hidden="true">▾</span>
+          </button>
+          <div class="collapsible__content" id="cat-breakdown-wrap">
+            <div class="cat-scores" id="cat-breakdown" aria-label="Category scores">
+              <!-- Populated by renderResults() -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Priority Actions -->
+        <div class="results__section">
+          <p class="section-heading" id="results-actions-heading">Your top priority actions</p>
+          <div class="results__actions" id="actions-list" aria-label="Priority actions">
+            <!-- Populated by renderResults() -->
+          </div>
+        </div>
+
+        <!-- Legal disclaimer -->
+        <div class="disclaimer" role="note" id="results-disclaimer"></div>
+
+        <!-- Action buttons -->
+        <div class="results__cta-stack">
+          <button class="btn btn-whatsapp" id="results-whatsapp" aria-label="Send results to WhatsApp">
+            <span class="btn__icon" aria-hidden="true">
+              <svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/></svg>
+            </span>
+            <span class="btn__label" data-i18n="results.whatsappCta">Send to my WhatsApp</span>
+          </button>
+          <button class="btn btn-secondary results__save" id="results-save" aria-label="Save results by email">
+            <span class="btn__icon" aria-hidden="true">
+              <svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+            </span>
+            <span class="btn__label" data-i18n="results.saveCta">Save my results</span>
+          </button>
+          <button class="btn btn-tertiary results__restart" id="results-restart" aria-label="Start the assessment over">
+            <span class="btn__icon" aria-hidden="true">
+              <svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"/></svg>
+            </span>
+            <span class="btn__label" data-i18n="results.restartCta">Start over</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 14 — WHATSAPP SHARE
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-whatsapp" class="screen" aria-label="WhatsApp sharing" tabindex="-1">
+      <div class="whatsapp">
+
+        <span class="whatsapp__icon" aria-hidden="true">
+          <svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path d="M760-480q0-117-81.5-198.5T480-760v-80q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-480h-80Zm-160 0q0-50-35-85t-85-35v-80q83 0 141.5 58.5T680-480h-80Zm198 360q-125 0-247-54.5T329-329Q229-429 174.5-551T120-798q0-18 12-30t30-12h162q14 0 25 9.5t13 22.5l26 140q2 16-1 27t-11 19l-97 98q20 37 47.5 71.5T387-386q31 31 65 57.5t72 48.5l94-94q9-9 23.5-13.5T670-390l138 28q14 4 23 14.5t9 23.5v162q0 18-12 30t-30 12ZM241-600l66-66-17-94h-89q5 41 14 81t26 79Zm358 358q39 17 79.5 27t81.5 13v-88l-94-19-67 67ZM241-600Zm358 358Z"/></svg>
+        </span>
+
+        <h1 class="whatsapp__heading" data-i18n="whatsapp.openingHeading">Open WhatsApp</h1>
+        <p class="whatsapp__text" data-i18n="whatsapp.openingText">Your results summary is ready to be shared.</p>
+        <p class="whatsapp__subtext" data-i18n="whatsapp.openingSubtext">WhatsApp will open with your results already prepared as a message.</p>
+
+        <button class="btn btn-primary whatsapp__cta" id="whatsapp-open" aria-label="Open WhatsApp with your results">
+          <span class="btn__icon" aria-hidden="true">
+            <svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"/></svg>
+          </span>
+          <span class="btn__label" data-i18n="whatsapp.openCta">Open WhatsApp</span>
+        </button>
+
+        <!-- Results preview -->
+        <div class="whatsapp__preview">
+          <p class="whatsapp__preview-label" data-i18n="whatsapp.previewLabel">Your results</p>
+          <div class="whatsapp__preview-box" id="whatsapp-preview-text" aria-label="Result message preview"></div>
+        </div>
+
+        <!-- Fallback section (shown if WhatsApp not available) -->
+        <div id="whatsapp-fallback" class="whatsapp__fallback" style="display: none;">
+          <p class="section-heading" data-i18n="whatsapp.fallbackHeading">WhatsApp not found</p>
+          <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-bottom: 1rem;"
+             data-i18n="whatsapp.fallbackText">
+            It looks like WhatsApp isn't installed. You can copy your result below.
+          </p>
+          <div class="whatsapp__copy-box" id="whatsapp-copy-text" aria-label="Result text to copy"></div>
+          <button class="btn btn-secondary" id="whatsapp-copy-btn" data-i18n="whatsapp.copyBtn">Copy result text</button>
+        </div>
+
+        <button class="btn btn-tertiary whatsapp__back" id="whatsapp-back" data-i18n="whatsapp.back">← Back to results</button>
+
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 15 — SAVE RESULTS — CONSENT
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-consent" class="screen" aria-label="Save results consent" tabindex="-1">
+      <div style="margin-top: 2rem;">
+        <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;" id="consent-heading">
+          Save your results
+        </h1>
+        <p style="font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 2rem;"
+           id="consent-body">
+          We'll use your email only to send your results. We won't keep it after delivery.
+        </p>
+
+        <!-- Consent checkbox -->
+        <label class="form-checkbox-wrap" for="consent-checkbox">
+          <input type="checkbox" class="form-checkbox" id="consent-checkbox"
+                 aria-required="true" />
+          <span class="form-checkbox-label" id="consent-check-label">
+            I agree to receive my results by email
+          </span>
+        </label>
+
+        <div class="btn-stack" style="margin-top: 2rem;">
+          <button class="btn btn-primary" id="consent-cta" disabled aria-disabled="true">Continue</button>
+          <button class="btn btn-tertiary" id="consent-decline">No thanks, go back</button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 16 — SAVE RESULTS — EMAIL ENTRY
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-email" class="screen" aria-label="Email entry" tabindex="-1">
+      <div style="margin-top: 2rem;">
+        <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;" id="email-heading">
+          Enter your email
+        </h1>
+
+        <form id="email-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="email-input" data-i18n="save.emailLabel">Email address</label>
+            <input type="email" class="form-input" id="email-input"
+                   autocomplete="email" autocapitalize="none" autocorrect="off"
+                   placeholder="your@email.com"
+                   aria-required="true"
+                   aria-describedby="email-error" />
+            <span class="form-error" id="email-error" role="alert" style="display: none;"></span>
+          </div>
+
+          <div class="btn-stack">
+            <button type="submit" class="btn btn-primary" id="email-submit">Send my results</button>
+            <button type="button" class="btn btn-tertiary" id="email-back">Back</button>
+          </div>
+        </form>
+
+        <p style="font-size: 0.75rem; color: var(--color-text-tertiary); margin-top: 1.5rem; line-height: 1.6;"
+           data-i18n="save.emailNote">
+          Your email will only be used to send your results and will not be stored afterwards.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 17 — SAVE RESULTS — SUCCESS
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-save-success" class="screen text-center" aria-label="Results sent successfully" tabindex="-1">
+      <div style="margin-top: 4rem;">
+        <span class="state-icon" aria-hidden="true" style="font-size: 3rem;">✓</span>
+        <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;" id="save-success-heading">
+          Results sent!
+        </h1>
+        <p style="font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 2rem;"
+           id="save-success-body">
+          Check your inbox. We won't store your email after delivery.
+        </p>
+        <button class="btn btn-primary" id="save-success-cta">Back to results</button>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 18 — SAVE RESULTS — EMAIL ERROR
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-save-error" class="screen text-center" aria-label="Email error" tabindex="-1">
+      <div style="margin-top: 4rem;">
+        <span class="state-icon" aria-hidden="true" style="font-size: 3rem;">⚠</span>
+        <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;" id="save-error-heading">
+          We couldn't send your results.
+        </h1>
+        <p style="font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 2rem;"
+           id="save-error-body">
+          Something went wrong. Please try again.
+        </p>
+        <div class="btn-stack">
+          <button class="btn btn-primary" id="save-error-retry">Try again</button>
+          <button class="btn btn-tertiary" id="save-error-back">Back to results</button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 21 — OFFLINE STATE
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-offline" class="screen text-center" aria-label="Offline state" tabindex="-1">
+      <div style="margin-top: 4rem;">
+        <span class="state-icon" aria-hidden="true">📵</span>
+        <h1 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;" id="offline-heading">
+          You're offline
+        </h1>
+        <p style="font-size: 0.875rem; color: var(--color-text-secondary); max-width: 280px; margin: 0 auto 2rem;"
+           id="offline-body">
+          No internet connection detected. You can still complete and review your assessment. All processing happens on your device.
+        </p>
+        <!-- Implementation note: assessment fully functional offline after initial page load (PRD §16) -->
+        <button class="btn btn-primary" id="offline-cta">Continue anyway</button>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         SCREEN 22 — GENERIC ERROR STATE
+         ══════════════════════════════════════════════════════════════════ -->
+    <section id="screen-error" class="screen text-center" aria-label="Error state" tabindex="-1">
+      <div style="margin-top: 4rem;">
+        <span class="state-icon" aria-hidden="true">⚠</span>
+        <h1 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;"
+            data-i18n="error.heading">
+          Something went wrong
+        </h1>
+        <p style="font-size: 0.875rem; color: var(--color-text-secondary); max-width: 280px; margin: 0 auto 2rem;"
+           data-i18n="error.body">
+          An unexpected error occurred. Please refresh the page and try again.
+        </p>
+        <button class="btn btn-primary" id="error-cta" data-i18n="error.cta">Refresh</button>
+      </div>
+    </section>
+
+  </main><!-- /main -->
+
+  <!-- ── Persistent Footer ─────────────────────────────────────────────── -->
+  <footer class="app-footer" role="contentinfo">
+    <button class="app-footer__privacy js-privacy-link"
+            id="footer-privacy-btn"
+            aria-label="View privacy information"
+            data-i18n="privacyLink">Your privacy</button>
+  </footer>
+
+</div><!-- /app-shell -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     MODALS
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<!-- MODAL: Restart Confirmation (Screen 19) -->
+<div class="modal-backdrop" id="modal-restart"
+     role="dialog" aria-modal="true" aria-labelledby="restart-modal-heading">
+  <div class="modal">
+    <h2 class="modal__header" id="restart-modal-heading">Start over?</h2>
+    <p class="modal__body" id="restart-modal-body">
+      This will clear your answers and take you back to the beginning.
+    </p>
+    <div class="modal__actions">
+      <button class="btn btn-primary" id="restart-modal-confirm">Yes, start over</button>
+      <button class="btn btn-secondary" id="restart-modal-cancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Privacy Notice (Screen 20) -->
+<div class="modal-backdrop" id="modal-privacy"
+     role="dialog" aria-modal="true" aria-labelledby="privacy-modal-heading">
+  <div class="modal">
+    <h2 class="modal__header" id="privacy-modal-heading">Your privacy</h2>
+    <div class="modal__body" id="privacy-modal-body">
+      <!-- Populated by renderPrivacy() -->
+    </div>
+    <div class="modal__actions">
+      <button class="btn btn-primary" id="privacy-modal-close">Close</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     SCRIPTS
+     Load order: lang → questions → app
+     (No module bundler required — loaded via script tags)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<script src="lang.js"></script>
+<script src="questions.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
