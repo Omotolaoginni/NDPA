@@ -42,7 +42,7 @@ const LANG = {
 
     // ── Business Data Volume ──
     size: {
-      heading: "How much customer information does your business handle?",
+      heading: "How many customers does your business handle?",
       subtext: "Select the option that best describes your business.",
       option_lt200: "Less than 200 people",
       option_lt200_hint: "You handle personal information for fewer than 200 people in 6 months.",
@@ -246,7 +246,7 @@ const LANG = {
     },
 
     size: {
-      heading: "How much customer information your business dey handle?",
+      heading: "How many customers your business dey handle?",
       subtext: "Choose the option wey best fit your business.",
       option_lt200: "Less than 200 people",
       option_lt200_hint: "You dey handle personal information for less than 200 people for 6 months.",

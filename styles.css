@@ -1515,6 +1515,13 @@ body {
   color: var(--color-selected-text);
 }
 
+/* Every child of a selected card switches to white immediately so no dark
+   text is left on the dark/black selected background (mobile-safe). */
+.selection-option.is-selected,
+.selection-option.is-selected * {
+  color: var(--color-selected-text);
+}
+
 .selection-option__main {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
