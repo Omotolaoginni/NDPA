@@ -399,6 +399,7 @@ body {
   text-align: center;
   user-select: none;
   letter-spacing: 0.03em;
+  color: var(--color-text-primary);
 }
 
 .answer-option:hover {
@@ -1495,6 +1496,7 @@ body {
   transition: all var(--transition-fast);
   text-align: left;
   width: 100%;
+  color: var(--color-text-primary);
 }
 
 .selection-option:hover {
@@ -1516,6 +1518,7 @@ body {
 .selection-option__main {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
 }
 
 .selection-option__hint {
@@ -1656,4 +1659,27 @@ body {
 /* ── Print (suppress) ────────────────────────────────────────────────────── */
 @media print {
   .app-header, .app-footer, .btn-stack, .btn-whatsapp { display: none; }
+}
+
+/* ── Wireframe Grayscale Enforcement ─────────────────────────────────────── */
+/* Prevent browser-default blue text (common on iOS/Android for links,
+   buttons, labels and form controls) from leaking into the wireframe.
+   Low-specificity element rules, so the design-system classes above that set
+   their own colors still win. */
+a,
+a:link,
+a:visited,
+a:any-link,
+button,
+input,
+select,
+textarea,
+label {
+  color: var(--color-text-primary);
+}
+
+a:hover,
+a:active,
+a:focus {
+  color: var(--color-text-secondary);
 }
