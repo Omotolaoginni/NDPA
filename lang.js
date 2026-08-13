@@ -246,7 +246,7 @@ const LANG = {
     },
 
     size: {
-      heading: "How many customer information your business they handle?",
+      heading: "How many customer information your business dey handle?",
       subtext: "Choose the option wey best fit your business.",
       option_lt200: "Less than 200 people",
       option_lt200_hint: "You dey handle personal information for people wey no reach 200 during the last six months.",
