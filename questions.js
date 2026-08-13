@@ -108,7 +108,7 @@ const QUESTIONS = [
     id: 5,
     category: "applicability",
     text: "Have you reviewed your business practices in the past 12 months for compliance with data protection rules?",
-    textPidgin: "You don check your business practices for the last 12 months to see if them align for under NDP Act.",
+    textPidgin: "You don check your business practices for the last 12 months to see if dem align for under NDP Act.",
     actionTitle: "Conduct an annual data protection review",
     actionTitlePidgin: "Check your business every year for data protection",
     actionWhy: "Regular reviews help you catch new risks and keep your practices up to date with any legal changes.",
